@@ -3,8 +3,6 @@ import time
 
 
 try:
-    expected_result = "Congratulations! You have successfully registered!"
-
     link = "http://suninjuly.github.io/registration2.html"
     browser = webdriver.Chrome()
     browser.get(link)
@@ -28,6 +26,7 @@ try:
     welcome_text = welcome_text_elt.text
 
     # с помощью assert проверяем, что ожидаемый текст совпадает с текстом на странице сайта
+    expected_result = "Congratulations! You have successfully registered!"
     assert expected_result == welcome_text
 finally:
     browser.quit()
