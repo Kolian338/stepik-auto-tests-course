@@ -15,15 +15,6 @@ def get_number():
     return str(answer)
 
 
-# Фикстура для запуска и закрытия браузера. Для каждой функции свой экземпляр
-@pytest.fixture(scope="function")
-def browser():
-    print("\nstart browser for test..")
-    browser = webdriver.Chrome()
-    yield browser
-    print("\nquit browser..")
-
-
 # Установил маркеры для теста
 @pytest.mark.regression
 @pytest.mark.parametrize('path', path_list)
