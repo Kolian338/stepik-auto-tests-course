@@ -4,15 +4,6 @@ from selenium import webdriver
 link = "http://selenium1py.pythonanywhere.com/"
 
 
-@pytest.fixture
-def browser():
-    print("\nstart browser for test..")
-    browser = webdriver.Chrome()
-    yield browser
-    print("\nquit browser..")
-    browser.quit()
-
-
 @pytest.fixture(autouse=True)
 def prepare_data():
     print()

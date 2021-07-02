@@ -2,16 +2,6 @@ import pytest
 from selenium import webdriver
 
 
-# Фикстура для запуска браузера и закрытия после выполнения, с областью запуска function
-@pytest.fixture(scope="function")
-def browser():
-    print("\nstart browser for test..")
-    browser = webdriver.Chrome()
-    yield browser
-    print("\nquit browser..")
-    browser.quit()
-
-
 # Передадим в наш тест ссылки на русскую и английскую версию главной страницы сайта
 @pytest.mark.parametrize('language', ["ru", "en-gb"])
 def test_guest_should_see_login_link(browser, language):
