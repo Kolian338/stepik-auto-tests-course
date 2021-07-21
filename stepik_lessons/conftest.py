@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import time
 
 
 # Обработчик опции при запуске pytest. Установка опций происходит из фикстуры browser
