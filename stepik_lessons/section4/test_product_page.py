@@ -1,6 +1,8 @@
 import pytest
 from pages.product_page import ProductPage
 from pages.basket_page import BasketPage
+from pages.login_page import LoginPage
+from faker import Faker
 
 
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
@@ -15,7 +17,7 @@ from pages.basket_page import BasketPage
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9",
                                   ])
-class TestClassProductPage:
+class TestGuestAddToBasketFromProductPage:
     def test_guest_can_add_product_to_basket(self, browser, link):
         page_product = ProductPage(browser, link)
         page_product.open()
@@ -64,5 +66,31 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     page.go_to_basket_page()
     basket_page = BasketPage(browser, browser.current_url)
     basket_page.should_be_empty_basket()
-    basket_page.should_be_text_that_basket_is_empty()  # Переписать, сделать унивирсальную проверку
+    basket_page.should_be_text_about_that_basket_is_empty()  # Переписать, сделать унивирсальную проверку
 
+
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = "https://selenium1py.pythonanywhere.com/accounts/login/"
+        self.login_page = LoginPage(browser, link)
+        self.login_page.open()
+        faker = Faker()
+        self.login_page.register_new_user(faker.email(), faker.password())
+        self.login_page.should_be_authorized_user()
+
+    def test_guest_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+        page_product = ProductPage(browser, link)
+        page_product.open()
+        page_product.should_not_be_success_message()
+
+# ToDo убрать проверку кода подтверждения в алерте
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+        page_product = ProductPage(browser, link)
+        page_product.open()
+        page_product.basket_adding()
+        page_product.should_be_message_about_adding_product()
+        page_product.should_be_products_name_equal()
+        page_product.should_be_prices_equal()
