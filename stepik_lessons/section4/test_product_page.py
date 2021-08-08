@@ -85,7 +85,6 @@ class TestUserAddToBasketFromProductPage:
         page_product.open()
         page_product.should_not_be_success_message()
 
-# ToDo убрать проверку кода подтверждения в алерте
     def test_user_can_add_product_to_basket(self, browser):
         link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
         page_product = ProductPage(browser, link)
