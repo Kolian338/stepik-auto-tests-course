@@ -7,7 +7,10 @@ class ProductPage(BasePage):
     def basket_adding(self):
         basket_button_add = self.browser.find_element(*ProductPageLocators.BASKET_BUTTON_ADD)
         basket_button_add.click()
-        # BasePage.solve_quiz_and_get_code(self) # Алерт с кодом
+
+        # Найти и решить уравнение, получить код
+    def solve_quiz_and_get_code(self):
+        BasePage.solve_quiz_and_get_code(self)  # Алерт с кодом
 
         # Проверяем что есть сообщение о добавлении товара в корзину
     def should_be_message_about_adding_product(self):
